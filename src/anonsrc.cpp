@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 
     // header of the ppm file
     std::ostringstream contentStream;
-    contentStream << "P3\n" << maxLineLen << fileContents.size() << "\n255\n";
+    contentStream << "P3\n" << maxLineLen << " " << fileContents.size() << "\n255\n";
 
     // write ppm file with on of off pixels
     unsigned int rightPad;
@@ -85,13 +85,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    std::ostringstream outfile;
-    outfile << argv[1] << ".ppm";
-
-    // create an outfile stream and write the file out 
-    std::ofstream fs(outfile.str(), std::ofstream::out);
-    fs << contentStream.str();
-    fs.close();
-
+    // write the content out
+    std::cout << contentStream.str();
     return 0;
 }
