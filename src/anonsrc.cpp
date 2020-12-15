@@ -20,7 +20,7 @@ std::vector<std::string> openFile(std::ifstream& file)
 void WriteColor(std::ostream& os, bool on) {
     int out;
     if (on) {
-        out = 255;
+        out = 1;
     } else {
         out = 0;
     }
@@ -46,10 +46,14 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    std::cerr << "Loading file...\n";
+
     std::vector<std::string> fileContents = openFile(file);
 
     unsigned int maxLineLen = 0;
     unsigned int lineLen;
+
+    std::cerr << "Getting widest line...\n";
 
     // get line of longest length
     for (std::string& s : fileContents) {
@@ -59,9 +63,13 @@ int main(int argc, char* argv[])
         }
     }
 
+    std::cerr << "Resolution: " << fileContents.size() << "x" << maxLineLen << "\n";
+    std::cerr << "Pixel count: " << fileContents.size() * maxLineLen << "\n";
+    std::cerr << "Drawing image...\n";
+
     // header of the ppm file
     std::ostringstream contentStream;
-    contentStream << "P3\n" << maxLineLen << " " << fileContents.size() << "\n255\n";
+    contentStream << "P3\n" << maxLineLen << " " << fileContents.size() << "\n1\n";
 
     // write ppm file with on of off pixels
     unsigned int rightPad;
@@ -85,6 +93,7 @@ int main(int argc, char* argv[])
         }
     }
 
+    std::cerr << "Writing out the image...\n";
     // write the content out
     std::cout << contentStream.str();
     return 0;
